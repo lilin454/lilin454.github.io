@@ -1,1 +1,713 @@
-The requested file reference is not currently visible. Use files.search or files.list to rediscover the file, then retry with a returned ref_id or file_id.
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1A2E52">
+<title>客庄惜帳｜溯水惜庄旅伴</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E7EBE1; --surface:#F6F7F2; --ink:#1C2836; --muted:#59636E; --line:#C5CCBF;
+  --indigo:#2A4675; --indigo-deep:#1A2E52; --tea:#4F6E35; --rice:#C2912F; --seal:#B3392C;
+  --water:#3C6A99; --water-soft:#A9C3DA; --on-indigo:#EEF1EA;
+  --serif:"Noto Serif TC","Noto Serif CJK TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","Noto Sans CJK TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#10161F; --surface:#18212D; --ink:#E5EAEF; --muted:#97A2AE; --line:#2B3645;
+    --indigo:#A7BCDD; --indigo-deep:#0D1726; --tea:#A6C489; --rice:#DDB15A; --seal:#E27A6C;
+    --water:#5C8CBE; --water-soft:#2A4563; --on-indigo:#E6EBF1;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10161F; --surface:#18212D; --ink:#E5EAEF; --muted:#97A2AE; --line:#2B3645;
+  --indigo:#A7BCDD; --indigo-deep:#0D1726; --tea:#A6C489; --rice:#DDB15A; --seal:#E27A6C;
+  --water:#5C8CBE; --water-soft:#2A4563; --on-indigo:#E6EBF1;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px);-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.65;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-user-select:none;user-select:none}
+a{color:inherit}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--rice);outline-offset:2px;border-radius:6px}
+
+/* gate */
+.gate{position:fixed;inset:0;z-index:70;background:var(--indigo-deep);color:var(--on-indigo);display:grid;grid-template-rows:1fr auto;
+  padding:calc(env(safe-area-inset-top,0px) + 28px) 26px calc(env(safe-area-inset-bottom,0px) + 28px);overflow:hidden;transition:transform .9s var(--ease),opacity .9s var(--ease)}
+.gate.gone{transform:translateY(-100%);opacity:.6;pointer-events:none}
+.gate .ripples{position:absolute;inset:auto -20% -8% -20%;height:62%;opacity:.5}
+.gate .ripples path{fill:none;stroke:var(--water);stroke-width:1.2}
+.gate .title{position:relative;display:flex;gap:18px;justify-content:flex-end;align-items:flex-start;padding-top:5vh;max-width:640px;width:100%;margin:0 auto}
+.gate .v{writing-mode:vertical-rl;text-orientation:upright;font-family:var(--serif);letter-spacing:.06em;line-height:1.05;margin:0}
+.gate .v.big{font-size:clamp(68px,21vw,128px);font-weight:900}
+.gate .v.small{font-size:clamp(18px,4.8vw,24px);font-weight:500;opacity:.8;margin-top:.6em}
+.gate .lede{position:absolute;left:0;bottom:2vh;max-width:18em;font-size:15px;line-height:1.85;opacity:.88;margin:0}
+.gate form{position:relative;display:grid;gap:12px;max-width:640px;width:100%;margin:0 auto}
+.gate label{font-size:14px;opacity:.75}
+.gate input{font:inherit;font-size:18px;background:transparent;border:0;border-bottom:1.5px solid rgba(238,241,234,.5);color:inherit;padding:8px 0;border-radius:0}
+.gate input::placeholder{color:rgba(238,241,234,.45)}
+.gate .enter{margin-top:8px;background:var(--on-indigo);color:var(--indigo-deep);border:0;border-radius:999px;padding:14px 22px;font-family:var(--serif);font-weight:900;font-size:19px;letter-spacing:.3em;transition:transform .2s var(--ease)}
+.gate .enter:active{transform:scale(.97)}
+
+/* shell */
+.app{max-width:760px;margin:0 auto;padding:0 18px calc(96px + env(safe-area-inset-bottom,0px))}
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  margin:0 -18px;padding:calc(env(safe-area-inset-top,0px) + 10px) 18px 10px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-family:var(--serif);font-weight:900;font-size:20px;letter-spacing:.2em;color:var(--indigo);line-height:1.2}
+.who{font-size:13px;color:var(--muted)}
+.rainpill{display:none;font-size:12.5px;border-radius:999px;padding:4px 10px;background:var(--water);color:#fff}
+body.rain .rainpill{display:inline-block}
+.view{display:none;padding-top:6px}
+.view.on{display:block}
+@media (prefers-reduced-motion:no-preference){.view.on{animation:fade .35s var(--ease)}}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.vh{font-family:var(--serif);font-weight:900;font-size:clamp(32px,8.5vw,46px);line-height:1.15;letter-spacing:.08em;margin:14px 0 6px}
+.vl{color:var(--muted);margin:0 0 18px;max-width:32em}
+.block{background:var(--surface);border-radius:20px;padding:16px 18px;margin:0 0 14px}
+.block h3{font-family:var(--serif);font-size:19px;margin:0 0 6px}
+.muted{color:var(--muted)}
+
+/* day switch */
+.days{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:4px 0 4px}
+.day{border:0;background:transparent;padding:10px 4px 12px;border-radius:14px;text-align:center;position:relative;transition:background .3s var(--ease)}
+.day .ch{display:block;font-family:var(--serif);font-weight:900;font-size:32px;line-height:1.1;color:var(--muted);transition:color .3s}
+.day .lb{display:block;font-size:12.5px;color:var(--muted);margin-top:4px}
+.day[aria-selected="true"]{background:var(--surface)}
+.day[aria-selected="true"] .ch{color:var(--indigo)}
+.day .dot{position:absolute;top:10px;right:14px;width:7px;height:7px;border-radius:50%;background:var(--tea);opacity:0;transition:opacity .3s}
+.day.complete .dot{opacity:1}
+.dayhead{padding:16px 2px 4px}
+.dayhead .k{font-size:13px;color:var(--muted)}
+.dayhead h1{font-family:var(--serif);font-weight:900;font-size:clamp(34px,9vw,50px);line-height:1.15;margin:2px 0 8px;letter-spacing:.08em}
+.dayhead p{margin:0;max-width:32em;color:var(--muted)}
+
+/* route */
+.route{list-style:none;margin:16px 0 0;padding:0}
+.stop{display:grid;grid-template-columns:30px 1fr;gap:0 12px;position:relative}
+.rail{position:relative}
+.rail::before{content:"";position:absolute;left:13px;top:0;bottom:0;width:4px;border-radius:2px;background:var(--line)}
+.rail .flow{position:absolute;left:13px;top:0;width:4px;border-radius:2px;background:var(--water);height:0;transition:height 1s var(--ease)}
+.stop.done .rail .flow{height:100%}
+.stop:last-child .rail::before,.stop:last-child .rail .flow{bottom:auto;height:24px}
+.node{position:absolute;left:5px;top:20px;width:20px;height:20px;border-radius:50%;background:var(--bg);border:3px solid var(--line);transition:all .5s var(--ease)}
+.stop.done .node{border-color:var(--water);background:var(--water);box-shadow:0 0 0 5px color-mix(in srgb,var(--water) 22%,transparent)}
+.stop.next .node{border-color:var(--rice)}
+.body{padding:10px 0 22px}
+.card{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:18px;padding:14px 16px;transition:transform .15s,border-color .3s}
+.card:active{transform:scale(.99)}
+.card .r1{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.card .tag{border-radius:999px;padding:1px 9px;font-size:12px;background:var(--rice);color:#1C1A14}
+.card h3{font-family:var(--serif);font-size:21px;font-weight:700;margin:2px 0 4px;line-height:1.35}
+.card .line{margin:0;color:var(--muted);font-size:14.5px;line-height:1.7}
+.card .more{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:13.5px;color:var(--indigo);font-weight:500}
+.card .chips{display:flex;gap:6px;flex-wrap:wrap}
+.mini{font-size:12px;border-radius:999px;padding:2px 9px;border:1px solid var(--line);color:var(--muted)}
+.mini.ok{border-color:var(--tea);color:var(--tea)}
+.rainnote{margin:8px 0 0;font-size:13.5px;color:var(--water);display:none}
+body.rain .rainnote{display:block}
+
+/* acts (shared) */
+.acts{display:grid;gap:10px}
+.move{display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:12px;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 14px;transition:border-color .3s,background .3s,transform .15s}
+.move:active{transform:scale(.985)}
+.move .ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--bg)}
+.move .ic svg{width:22px;height:22px;fill:none;stroke:var(--tea);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.move .tx b{display:block;font-weight:500;font-size:15.5px;line-height:1.4}
+.move .tx span{font-size:13px;color:var(--muted)}
+.move .st{font-size:13px;color:var(--tea);border:1.5px solid var(--tea);border-radius:999px;padding:4px 11px;white-space:nowrap;transition:all .3s}
+.move[aria-pressed="true"]{border-color:var(--tea);background:color-mix(in srgb,var(--tea) 9%,var(--surface))}
+.move[aria-pressed="true"] .st{background:var(--tea);color:var(--surface)}
+.phrase{position:relative;background:var(--surface);border-radius:16px;padding:16px 16px 14px;border:1px solid var(--line);overflow:hidden}
+.phrase .zh{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.2;letter-spacing:.06em;color:var(--indigo)}
+.phrase .mean{font-size:14px;color:var(--muted);margin-top:4px}
+.phrase .when{font-size:13px;color:var(--muted)}
+.phrase .say{margin-top:12px;border:0;background:var(--indigo);color:var(--surface);border-radius:999px;padding:9px 18px;font-weight:500;font-size:15px;transition:transform .15s}
+.phrase .say:active{transform:scale(.96)}
+.phrase.said .say{background:transparent;color:var(--muted);padding-left:0;font-size:13px}
+.seal{position:absolute;right:14px;top:14px;width:62px;height:62px;border:3px solid var(--seal);border-radius:8px;color:var(--seal);display:grid;place-items:center;font-family:var(--serif);font-weight:900;font-size:15px;line-height:1.05;text-align:center;transform:rotate(-9deg);opacity:0;pointer-events:none}
+.phrase.said .seal{opacity:.9}
+.phrase.stamp .seal{animation:stamp .55s var(--ease)}
+@keyframes stamp{0%{transform:rotate(-20deg) scale(2.2);opacity:0}60%{transform:rotate(-8deg) scale(.92);opacity:1}100%{transform:rotate(-9deg) scale(1);opacity:.9}}
+.spend{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;background:transparent;border:1.5px dashed color-mix(in srgb,var(--rice) 70%,var(--line));border-radius:16px;padding:12px 14px;text-align:left}
+.spend b{font-weight:500;font-size:15px}
+.spend span{font-size:13px;color:var(--muted)}
+.spend .sum{font-family:var(--serif);font-weight:900;color:var(--rice);font-size:18px;white-space:nowrap}
+.btnrow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ghost{display:flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--line);background:transparent;border-radius:14px;padding:12px;font-weight:500;text-decoration:none;font-size:15px}
+.ghost svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.primary{width:100%;border:0;border-radius:16px;padding:15px;background:var(--indigo);color:var(--surface);font-weight:700;font-size:16px}
+.primary:disabled{opacity:.4}
+.finale{background:var(--indigo-deep);color:var(--on-indigo);font-family:var(--serif);letter-spacing:.14em;font-size:18px}
+
+/* guide sheet content */
+.gh .r1{font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.gh h2{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.3;margin:2px 0 12px;letter-spacing:.04em}
+.gh p.g{margin:0 0 12px;font-size:16px;line-height:1.85}
+.look{border-left:4px solid var(--rice);padding:10px 14px;background:color-mix(in srgb,var(--rice) 10%,var(--surface));border-radius:4px 12px 12px 4px;margin:4px 0 16px}
+.look b{display:block;font-size:13px;color:var(--rice);font-weight:700;margin-bottom:2px}
+.gh .rainbox{border-left:4px solid var(--water);padding:10px 14px;background:color-mix(in srgb,var(--water) 10%,var(--surface));border-radius:4px 12px 12px 4px;margin:0 0 16px;display:none}
+body.rain .gh .rainbox{display:block}
+.sect{font-size:13px;color:var(--muted);margin:18px 0 8px}
+
+/* pond */
+.pond{position:relative;padding:14px 16px;background:var(--surface);border-radius:24px 24px 24px 6px;display:grid;grid-template-columns:1fr 110px;gap:10px;align-items:center;margin-bottom:14px}
+.pond svg{display:block;width:100%;height:auto}
+.pond .shape{fill:color-mix(in srgb,var(--water-soft) 45%,var(--surface));stroke:var(--line);stroke-width:5}
+.pond .wl{transition:transform 1.2s var(--ease)}
+.pond .wave{fill:var(--water)}
+.pond .wave.b{opacity:.55}
+@media (prefers-reduced-motion:no-preference){
+  .pond .wave.a{animation:drift 7s linear infinite}
+  .pond .wave.b{animation:drift 11s linear infinite reverse}
+}
+@keyframes drift{to{transform:translateX(-200px)}}
+.pond .ring{fill:none;stroke:var(--surface);stroke-width:2;opacity:0;transform-origin:150px 80px;transform-box:view-box}
+.pond.pulse .ring{animation:ring 1.1s var(--ease)}
+@keyframes ring{0%{opacity:.9;transform:scale(.2)}100%{opacity:0;transform:scale(1.6)}}
+.pond .read{text-align:right}
+.pond .pct{font-family:var(--serif);font-weight:900;font-size:44px;line-height:1;color:var(--indigo)}
+.pond .pct small{font-size:18px;margin-left:2px}
+.pond .cap{font-size:13px;color:var(--muted);line-height:1.5;margin-top:6px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.stat{background:var(--surface);border-radius:16px;padding:12px}
+.stat .n{font-family:var(--serif);font-weight:900;font-size:24px;line-height:1.2}
+.stat .n small{font-size:13px;font-weight:500;margin-left:2px}
+.stat .l{font-size:12.5px;color:var(--muted)}
+.ctr{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.ctr:first-of-type{border-top:0}
+.ctr b{display:block;font-weight:500}
+.ctr span{font-size:13px;color:var(--muted)}
+.step{display:flex;align-items:center;gap:6px}
+.step button{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--line);background:transparent;font-size:22px;line-height:1}
+.step button.plus{background:var(--tea);border-color:var(--tea);color:var(--surface)}
+.step output{min-width:30px;text-align:center;font-family:var(--serif);font-weight:900;font-size:22px}
+.ledger{list-style:none;margin:8px 0 0;padding:0}
+.ledger li{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:14.5px}
+.ledger li em{font-style:normal;color:var(--muted)}
+.ledger .x{border:0;background:none;color:var(--muted);font-size:13px;text-decoration:underline;padding:0 0 0 10px}
+
+/* help */
+.switch{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.tg{width:54px;height:32px;border-radius:16px;border:0;background:var(--line);position:relative;flex:none;transition:background .3s}
+.tg::after{content:"";position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;transition:transform .3s var(--ease);box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.tg[aria-checked="true"]{background:var(--water)}
+.tg[aria-checked="true"]::after{transform:translateX(22px)}
+.sos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.sos a{display:flex;flex-direction:column;justify-content:center;border-radius:16px;padding:14px;text-decoration:none;background:var(--bg);min-height:76px}
+.sos a b{font-family:var(--serif);font-size:22px;line-height:1.2}
+.sos a span{font-size:13px;color:var(--muted)}
+.sos a.red b{color:var(--seal)}
+.sos a[aria-disabled="true"]{opacity:.5}
+.links a{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-top:1px solid var(--line);text-decoration:none}
+.links h3+a{border-top:0}
+.links a span{font-size:13px;color:var(--muted)}
+.check{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line);cursor:pointer}
+.check:first-of-type{border-top:0}
+.check input{width:22px;height:22px;margin:2px 0 0;accent-color:var(--tea);flex:none}
+.field{width:100%;font:inherit;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--ink)}
+.coef{display:grid;grid-template-columns:1fr 110px;gap:10px 12px;align-items:center;margin:12px 0;font-size:14.5px}
+.coef input{font:inherit;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 10px;color:var(--ink);width:100%}
+.danger{border:0;background:none;color:var(--seal);text-decoration:underline;padding:0;font-size:14px}
+
+/* tabbar */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-top:1px solid var(--line);padding:6px 8px calc(env(safe-area-inset-bottom,0px) + 6px)}
+.tabbar .in{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.tab{border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;color:var(--muted);font-size:12px;position:relative}
+.tab .g{font-family:var(--serif);font-weight:900;font-size:21px;line-height:1.1}
+.tab[aria-selected="true"]{color:var(--indigo)}
+.tab[aria-selected="true"]::before{content:"";position:absolute;top:-7px;left:30%;right:30%;height:3px;border-radius:0 0 3px 3px;background:var(--indigo)}
+
+/* sheets */
+.scrim{position:fixed;inset:0;z-index:40;background:rgba(9,15,24,.5);opacity:0;pointer-events:none;transition:opacity .35s}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;background:var(--surface);border-radius:26px 26px 0 0;padding:10px 20px calc(env(safe-area-inset-bottom,0px) + 22px);max-height:90%;overflow:auto;transform:translateY(105%);transition:transform .45s var(--ease);overscroll-behavior:contain}
+.sheet.on{transform:none}
+@media (min-width:700px){.sheet{left:50%;width:560px;margin-left:-280px}}
+.grab{width:42px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 14px}
+.sheet h2.t{font-family:var(--serif);font-weight:900;font-size:24px;margin:0 0 4px;letter-spacing:.06em}
+.sheet .sub{margin:0 0 16px;color:var(--muted);font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.chip{border:1.5px solid var(--line);background:transparent;border-radius:999px;padding:7px 14px;font-size:14.5px;transition:all .2s}
+.chip[aria-pressed="true"]{border-color:var(--rice);background:var(--rice);color:#1C1A14}
+.amt{display:flex;align-items:baseline;gap:6px;border-bottom:2px solid var(--ink);margin:4px 0 14px;padding:4px 0}
+.amt span{font-family:var(--serif);font-size:20px}
+.amt input{font-family:var(--serif);font-weight:900;font-size:40px;border:0;background:transparent;color:var(--ink);width:100%;padding:0}
+.close-x{position:sticky;top:0;float:right;width:36px;height:36px;border-radius:50%;border:0;background:var(--bg);font-size:20px;line-height:1;margin:-4px -6px 0 0;z-index:2}
+
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 82px);z-index:45;transform:translate(-50%,20px);opacity:0;background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:999px;font-size:14px;white-space:nowrap;transition:all .35s var(--ease);pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* receipt */
+.rc{position:fixed;inset:0;z-index:60;display:grid;place-items:start center;align-content:start;overflow:auto;padding:calc(env(safe-area-inset-top,0px) + 22px) 12px calc(env(safe-area-inset-bottom,0px) + 24px);background:rgba(9,15,24,.93);opacity:0;pointer-events:none;transition:opacity .3s}
+.rc.on{opacity:1;pointer-events:auto}
+.printer{width:min(400px,100%);height:22px;border-radius:11px;background:#0A1220;box-shadow:inset 0 3px 6px rgba(0,0,0,.6);position:relative;z-index:2}
+.feed{width:min(380px,calc(100% - 20px));overflow:hidden;margin-top:-11px;padding-bottom:14px}
+.slip{background:#FBF9F2;color:#2A2420;font-family:var(--serif);padding:30px 16px 26px 18px;position:relative;transform:translateY(-102%);background-image:repeating-linear-gradient(to bottom,transparent 0 33px,rgba(179,57,44,.18) 33px 34px)}
+.rc.on .slip{transform:none;transition:transform 1.5s steps(14,end) .15s}
+.slip::before{content:"";position:absolute;top:0;bottom:0;left:58px;width:1px;background:rgba(179,57,44,.42)}
+.slip::after{content:"";position:absolute;left:0;right:0;bottom:-10px;height:10px;background:linear-gradient(-45deg,transparent 7px,#FBF9F2 0) 0 0/14px 10px,linear-gradient(45deg,transparent 7px,#FBF9F2 0) 0 0/14px 10px}
+.slip h2{margin:0;text-align:center;font-size:28px;letter-spacing:.42em;padding-left:.42em;color:#B3392C;font-weight:900}
+.slip .meta{text-align:center;font-size:13px;color:#6E625B;margin:4px 0 16px;font-family:var(--sans)}
+.slip .mark{position:absolute;right:16px;top:16px;width:50px;height:50px;border:3px solid #B3392C;border-radius:6px;color:#B3392C;display:grid;place-items:center;font-weight:900;font-size:14px;line-height:1.05;text-align:center;transform:rotate(-8deg);opacity:.85}
+.slip table{width:100%;border-collapse:collapse;font-size:15px}
+.slip td{padding:5px 0;line-height:24px;vertical-align:top}
+.slip td:first-child{width:40px;color:#B3392C;font-weight:900;text-align:center}
+.slip td:nth-child(2){padding-left:12px}
+.slip td:last-child{text-align:right;white-space:nowrap;font-weight:700;font-variant-numeric:tabular-nums}
+.slip tr.sum td{border-top:2px solid #2A2420;padding-top:9px;font-size:17px}
+.slip .vow{margin:18px 0 0 58px;font-size:14.5px}
+.slip .vow input{width:100%;margin-top:4px;background:transparent;border:0;border-bottom:1px solid #2A2420;color:#2A2420;font-family:var(--serif);font-size:16px;padding:4px 0;border-radius:0}
+.slip .vow input::placeholder{color:#9B8F86}
+.slip .code{margin:16px 0 0 58px;font-family:var(--sans);font-size:11.5px;color:#7A6E66;word-break:break-all;line-height:1.5}
+.slip .sign{margin:14px 0 0 58px;font-size:13px;color:#6E625B}
+.rc .after{width:min(380px,100%);display:grid;gap:10px;margin-top:20px;opacity:0;transition:opacity .4s 1.6s}
+.rc.on .after{opacity:1}
+.rc .after p{margin:0;color:#D5DCE3;font-size:13.5px;text-align:center}
+.rc .after button{border:0;border-radius:14px;padding:13px;background:#EEF1EA;color:#1A2E52;font-weight:700}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<section class="gate" id="gate" aria-label="開始">
+  <svg class="ripples" viewBox="0 0 400 220" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 40 Q100 20 200 40 T400 40"/><path d="M0 80 Q100 60 200 80 T400 80"/><path d="M0 120 Q100 100 200 120 T400 120"/><path d="M0 160 Q100 140 200 160 T400 160"/><path d="M0 200 Q100 180 200 200 T400 200"/>
+  </svg>
+  <div class="title">
+    <span class="v small">大龍門客庄三日旅伴</span>
+    <h1 class="v big">溯水惜庄</h1>
+    <p class="lede">行程、導覽、交通、客語，<br>和一本會漲水的帳，<br>三天都在這一頁裡。</p>
+  </div>
+  <form id="gateForm">
+    <label for="gName">收據上要寫的名字</label>
+    <input id="gName" autocomplete="nickname" maxlength="16" placeholder="你的名字或暱稱">
+    <button class="enter" type="submit">入庄</button>
+  </form>
+</section>
+
+<div class="app" id="app" hidden>
+  <header class="top">
+    <div><div class="brand">客庄惜帳</div><div class="who" id="who"></div></div>
+    <span class="rainpill">雨天模式</span>
+  </header>
+
+  <section class="view" id="v-trip" aria-label="行程">
+    <nav class="days" role="tablist" aria-label="三天行程" id="days"></nav>
+    <div id="trip"></div>
+  </section>
+
+  <section class="view" id="v-ledger" aria-label="惜帳">
+    <h1 class="vh">惜帳</h1>
+    <p class="vl">龍潭人靠埤塘存水過一年。走完一段路、說出一句客語、在小店花一筆錢，埤塘就漲一點。</p>
+    <div class="pond" id="pond" aria-label="你的埤塘水位">
+      <svg viewBox="0 0 300 150" aria-hidden="true">
+        <defs><clipPath id="pc"><path id="pondPath" d="M24 62 C30 26 92 12 152 16 C222 20 286 34 282 80 C278 124 214 140 146 136 C78 132 18 112 24 62 Z"/></clipPath></defs>
+        <use href="#pondPath" class="shape"/>
+        <g clip-path="url(#pc)">
+          <g class="wl" id="wl" style="transform:translateY(150px)">
+            <path class="wave b" d="M0 8 Q25 0 50 8 T100 8 T150 8 T200 8 T250 8 T300 8 T350 8 T400 8 T450 8 T500 8 T550 8 T600 8 V200 H0 Z"/>
+            <path class="wave a" d="M0 12 Q25 4 50 12 T100 12 T150 12 T200 12 T250 12 T300 12 T350 12 T400 12 T450 12 T500 12 T550 12 T600 12 V200 H0 Z"/>
+          </g>
+          <ellipse class="ring" cx="150" cy="80" rx="40" ry="14"/>
+        </g>
+      </svg>
+      <div class="read"><div class="pct" id="pct">0<small>%</small></div><div class="cap" id="cap"></div></div>
+    </div>
+    <div class="stats" id="stats"></div>
+    <div class="block">
+      <h3>隨手惜</h3>
+      <p class="muted" style="margin:0 0 4px;font-size:14px">不用等到某個景點，隨時發生隨時記。</p>
+      <div id="ctrs"></div>
+    </div>
+    <div class="block">
+      <div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">留在客庄的錢</h3>
+        <button class="ghost" id="addSpend" style="padding:7px 14px;font-size:14px">記一筆</button></div>
+      <ul class="ledger" id="ledger"></ul>
+    </div>
+    <button class="primary finale" id="openRc">印出我的客庄收據</button>
+  </section>
+
+  <section class="view" id="v-words" aria-label="客語">
+    <h1 class="vh">客語</h1>
+    <p class="vl">七句生活客話，依行程出現。對店家或茶農說出口，就按一下。用字與發音以現場在地人教你的為準。</p>
+    <div id="wordlist" class="acts"></div>
+  </section>
+
+  <section class="view" id="v-help" aria-label="協助">
+    <h1 class="vh">協助</h1>
+    <div class="block">
+      <div class="switch"><div><h3 style="margin:0">雨天模式</h3><span class="muted" style="font-size:14px">打開後，每一站都會顯示雨天的替代安排。</span></div>
+        <button class="tg" id="rainTg" role="switch" aria-checked="false" aria-label="雨天模式"></button></div>
+    </div>
+    <div class="block">
+      <h3>緊急協助</h3>
+      <div class="sos">
+        <a class="red" href="tel:119"><b>119</b><span>受傷、身體不適</span></a>
+        <a class="red" href="tel:110"><b>110</b><span>治安、遺失證件</span></a>
+        <a id="leaderCall" href="#"><b>領隊</b><span id="leaderTxt">在下方填入領隊電話</span></a>
+        <a target="_blank" rel="noopener" href="https://www.google.com/maps/search/%E9%86%AB%E9%99%A2"><b>醫院</b><span>查詢附近醫院</span></a>
+      </div>
+    </div>
+    <div class="block links">
+      <h3>交通查詢</h3>
+      <a target="_blank" rel="noopener" href="https://www.taiwantrip.com.tw/"><b>台灣好行時刻</b><span>503 大龍門線</span></a>
+      <a target="_blank" rel="noopener" href="https://ebus.tycg.gov.tw/"><b>桃園公車動態</b><span>一般公車到站時間</span></a>
+      <a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&amp;destination=%E4%B8%AD%E5%A3%A2%E7%81%AB%E8%BB%8A%E7%AB%99&amp;travelmode=transit"><b>回中壢車站</b><span>開啟導航</span></a>
+    </div>
+    <div class="block">
+      <h3>行前準備</h3>
+      <div id="prep"></div>
+    </div>
+    <div class="block">
+      <h3>設定</h3>
+      <label class="muted" for="setName" style="font-size:14px">收據上的名字</label>
+      <input class="field" id="setName" maxlength="16" style="margin:4px 0 12px">
+      <label class="muted" for="setLeader" style="font-size:14px">領隊電話</label>
+      <input class="field" id="setLeader" type="tel" inputmode="tel" maxlength="20" style="margin:4px 0 12px">
+      <b style="font-weight:700">減碳係數（公斤 CO₂e／延人公里）</b>
+      <p class="muted" style="margin:4px 0 0;font-size:13.5px">環境部產品碳足跡資訊網係數，轉引自臺南市市民手冊。台灣好行沿用市區公車；接駁車保守以小客車計；步行與單車不列入比較。</p>
+      <div class="coef">
+        <label for="cCar">對照：自用小客車</label><input id="cCar" type="number" step="0.001" min="0" inputmode="decimal">
+        <label for="cBus">公車、台灣好行</label><input id="cBus" type="number" step="0.001" min="0" inputmode="decimal">
+        <label for="cVan">小型接駁車</label><input id="cVan" type="number" step="0.001" min="0" inputmode="decimal">
+      </div>
+      <p class="muted" style="font-size:13.5px">紀錄只存在這支手機，不會上傳。</p>
+      <button class="danger" id="reset">清除這支手機上的惜帳</button>
+    </div>
+  </section>
+</div>
+
+<nav class="tabbar" id="tabbar" hidden role="tablist" aria-label="主選單"><div class="in">
+  <button class="tab" data-v="trip" role="tab"><span class="g">程</span>行程</button>
+  <button class="tab" data-v="ledger" role="tab"><span class="g">帳</span>惜帳</button>
+  <button class="tab" data-v="words" role="tab"><span class="g">話</span>客語</button>
+  <button class="tab" data-v="help" role="tab"><span class="g">助</span>協助</button>
+</div></nav>
+
+<div class="scrim" id="scrim"></div>
+<section class="sheet" id="guide" role="dialog" aria-modal="true" aria-label="導覽"><div class="grab"></div><button class="close-x" data-close aria-label="關閉">×</button><div id="guideBody" class="gh"></div></section>
+<section class="sheet" id="spendSheet" role="dialog" aria-modal="true" aria-labelledby="spT">
+  <div class="grab"></div>
+  <h2 class="t" id="spT">記一筆在地消費</h2>
+  <p class="sub" id="spWhere"></p>
+  <div class="chips" id="spType"></div>
+  <div class="chips" id="spQuick"></div>
+  <div class="amt"><span>NT$</span><input id="spAmt" type="number" inputmode="numeric" min="1" placeholder="0" aria-label="金額"></div>
+  <input class="field" id="spName" placeholder="店名（可不填）" maxlength="20" aria-label="店名" style="margin-bottom:16px">
+  <button class="primary" id="spSave" disabled>記下這筆</button>
+</section>
+
+<div class="toast" id="toast" role="status"></div>
+
+<div class="rc" id="rc" role="dialog" aria-modal="true" aria-labelledby="rcT">
+  <div class="printer" aria-hidden="true"></div>
+  <div class="feed"><div class="slip" id="slip"></div></div>
+  <div class="after"><p>截圖就能把這張收據帶回家。</p><button id="closeRc">回到惜帳</button></div>
+</div>
+
+<script>
+const IC = {
+  bus:'<svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="15" rx="3"/><path d="M4 11h16M8 21v-3M16 21v-3"/></svg>',
+  van:'<svg viewBox="0 0 24 24"><path d="M3 16V8a2 2 0 0 1 2-2h9l5 5v5H3z"/><path d="M14 6v5h5"/><circle cx="7" cy="17" r="2"/><circle cx="16" cy="17" r="2"/></svg>',
+  walk:'<svg viewBox="0 0 24 24"><circle cx="13" cy="4" r="1.8"/><path d="M10 21l2-6 3 3v3M9 12l2-4 4 2 2 3M11 8l-3 2v3"/></svg>',
+  bike:'<svg viewBox="0 0 24 24"><circle cx="5.5" cy="16.5" r="3.5"/><circle cx="18.5" cy="16.5" r="3.5"/><path d="M5.5 16.5l4-7h6l3 7M9.5 9.5l3 7h-7M14 6h3"/></svg>',
+  pin:'<svg viewBox="0 0 24 24"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>'
+};
+const MODE = {bus:'公共運輸', van:'接駁', walk:'步行', bike:'單車'};
+const DAYS = [
+ {ch:'字', name:'惜字', k:'第一天・龍潭', lead:'從敬字的聖蹟亭走進客庄，看客家人怎麼建庄、讀書、與埤塘一起生活。', stops:[
+  {t:'09:00', stay:'30 分', p:'中壢站集合', q:'中壢火車站', l:'領取餐具袋與水壺，打開這個網頁，旅程從這裡開始。',
+   g:['從中壢火車站前站出來，就是這趟旅程的起點。接下來三天，行程、導覽、交通和客語都在這個網頁裡。','領隊會發給你可重複使用的餐具袋與水壺。三天裡每一次用上它們，記得在「惜帳」的隨手惜加一筆。'],
+   look:'打開「協助」頁的行前準備，看看還缺什麼。'},
+  {t:'09:30', stay:'車程 40 分', p:'搭公車入庄', q:'龍潭', mode:'transit', l:'把車留在家，搭公車入庄。這是惜帳的第一筆。',
+   g:['從中壢搭公車往龍潭。車子離開市區後，窗外會慢慢出現田地和埤塘。','同一段路如果開車，每人排放大約是搭公車的兩倍。這一筆，會在收據上替你算出來。'],
+   look:'數數看，到龍潭之前你從窗外看到幾座埤塘。', a:[{k:'move',id:'1a',lb:'搭公車入庄',m:'bus',km:12}]},
+  {t:'10:20', stay:'60 分', p:'龍潭聖蹟亭', q:'龍潭聖蹟亭', l:'寫過字的紙不隨手丟，要送進亭裡焚化。客庄對文字的敬重，從這裡開始。',
+   g:['敬字亭是客家庄常見的建築。過去的人相信文字神聖，寫過字的紙不能隨意丟棄，要集中送進亭裡焚化，再把紙灰送入溪流。','這份對文字的敬重，也是對知識與資源的珍惜。客家人重視讀書，「晴耕雨讀」是許多客庄的生活理想。'],
+   look:'找找看亭身上焚化字紙的爐口在哪裡。', rain:'亭區在戶外，雨天縮短停留，提早前往午餐。'},
+  {t:'11:40', stay:'80 分', p:'惜食客家餐', q:'龍潭 客家菜', l:'福菜、梅干、菜脯，都是盛產季吃不完的菜。醃起來，一整年都不浪費。',
+   g:['客家菜常見的福菜、梅干菜、菜脯，來自同一個想法：盛產季吃不完的蔬菜，曬乾、醃漬後保存，一整年都不浪費。','這一餐試著吃完；吃不完的，用自己的餐盒打包。'],
+   look:'問問店家：這道菜裡的醃漬菜，是用哪一種蔬菜做的？', a:[{k:'word',id:'w1',zh:'恁仔細',mean:'謝謝',when:'結帳時對老闆說'},{k:'spend',type:'在地餐飲'}]},
+  {t:'13:15', stay:'75 分', p:'鍾肇政文學生活園區', q:'鍾肇政文學生活園區', l:'客家作家筆下的庄，是你接下來三天要走的地方。',
+   g:['鍾肇政是台灣重要的客家文學作家，長年在龍潭生活與寫作。園區保留了作家當年的生活空間與創作故事。','先讀他筆下的客庄，再走出門看看今天的龍潭，比較兩者的差別。'],
+   look:'在園區裡找一段你喜歡的句子，拍下來當作今天的書籤。', rain:'室內展區可延長停留，取代下一站的戶外步行。'},
+  {t:'14:45', stay:'60 分', p:'龍潭觀光大池', q:'龍潭觀光大池', l:'龍潭被叫做千塘之鄉。埤塘存下的水，養活了茶、稻和人。',
+   g:['桃園台地河短流急，雨水留不住，先民便挖掘埤塘蓄水灌溉，龍潭也因此有「千塘之鄉」之稱。龍潭大池就是由早年的埤塘而來。','埤塘把雨水存起來，讓稻田和茶園撐過乾季。這也是你手機裡那座埤塘的由來。'],
+   look:'沿著池邊走一段，數數你看到幾種水鳥或水生植物。', rain:'雨天改在鍾肇政文學生活園區多停留，直接前往會館。', a:[{k:'move',id:'1b',lb:'今天走過的路',m:'walk',km:3.5}]},
+  {t:'16:00', stay:'入住', p:'渴望會館', q:'渴望會館', l:'取得環保標章的旅宿。自己帶的牙刷，記得記在隨手惜。',
+   g:['今晚住的渴望會館取得環保標章，房間不主動提供一次性備品。','用自己帶的盥洗用品、續住不更換床單，都是住宿裡最直接的減量。'],
+   look:'打開房間的衣櫃或抽屜，看看裡面有沒有一次性備品。', a:[{k:'move',id:'1c',lb:'接駁到會館',m:'van',km:5}]},
+  {t:'19:30', stay:'60 分', p:'客庄說書', q:'渴望會館', l:'在地人講庄裡的故事，順便教你幾句真正用得到的客話。',
+   g:['今晚由在地人分享庄裡的生活故事，從埤塘、茶園講到小時候的龍潭。','說書結束前，會教大家幾句明天用得到的客話。'],
+   look:'問說書人一個問題：你小時候的龍潭和現在最大的不同是什麼？', a:[{k:'word',id:'w2',zh:'食飽吂？',mean:'吃飽了嗎',when:'客家人見面的問候'}]}
+ ]},
+ {ch:'食', name:'惜食', k:'第二天・龍潭・大溪', lead:'茶和米撐起了客庄的生計。今天跟著茶農，看作物怎麼一點都不浪費。', stops:[
+  {t:'08:40', stay:'80 分', p:'臺灣客家茶文化館', q:'臺灣客家茶文化館', l:'客家人移墾到丘陵，種下了茶。這是庄的經濟從哪裡來。',
+   g:['客家先民來到桃園丘陵，在不適合種稻的坡地上種茶。茶曾是北台灣重要的外銷產品，撐起了許多客庄的生計。','館內介紹客家茶產業的歷史與製茶工序，是理解今天行程的起點。'],
+   look:'找找館內介紹的製茶步驟，數數看共有幾道工序。', a:[{k:'move',id:'2a',lb:'接駁到茶文化館',m:'van',km:8}]},
+  {t:'10:30', stay:'90 分', p:'大北坑・十一份茶區', q:'龍潭 大北坑', l:'跟著茶農走一圈茶園，聽他說今年的天氣和茶。',
+   g:['龍潭的茶園分布在丘陵上。跟著茶農走一圈，聽他說天氣、季節和今年的茶。','茶園旁常見的埤塘和水圳，是茶與水關係最直接的證據。'],
+   look:'問茶農：今年的天氣，對茶有什麼影響？', rain:'雨天改在茶農的製茶場室內聽解說、品茶。',
+   a:[{k:'move',id:'2b',lb:'接駁到茶區',m:'van',km:5},{k:'word',id:'w5',zh:'盡靚',mean:'很漂亮',when:'看著茶園說'},{k:'word',id:'w3',zh:'承蒙你',mean:'感謝你',when:'離開前謝謝茶農'},{k:'spend',type:'茶農・茶行'}]},
+  {t:'12:15', stay:'75 分', p:'客庄同桌飯', q:'龍潭 大北坑 客家餐廳', l:'茶入菜，茶農和你坐同一桌。吃不完的，裝進自己的盒子。',
+   g:['茶不只能喝，也能入菜。和茶農同桌吃飯，聽他說種茶的日常。','這一餐由在地餐廳準備，食材以龍潭當地為主。'],
+   look:'猜猜看哪一道菜裡用了茶，再問問廚房答案。', a:[{k:'word',id:'w4',zh:'當好食',mean:'很好吃',when:'吃完對廚房說'}]},
+  {t:'13:45', stay:'120 分', p:'好時節農場環境教育中心', q:'好時節休閒農場', l:'環境教育場所。從土壤和水，理解永續農業怎麼運作。',
+   g:['好時節休閒農場設有永續農業環境教育中心，是本遊程的環境教育場所之一。','今天的課程從土壤、水和作物出發，看永續農業如何減少浪費、照顧土地。'],
+   look:'課程結束前，記下一個你回家也能做的惜食方法。', a:[{k:'move',id:'2c',lb:'接駁到農場',m:'van',km:10},{k:'move',id:'2e',lb:'走茶園與農場',m:'walk',km:2.5}]},
+  {t:'16:30', stay:'休息', p:'回到會館', q:'渴望會館', l:'續住不換床單，也是一種惜。',
+   g:['回到會館稍作休息。','續住不更換床單、毛巾重複使用，可以省下清洗用的水和電。'],
+   look:'把今天用上餐具袋和水壺的次數，補記到隨手惜。', a:[{k:'move',id:'2d',lb:'接駁回會館',m:'van',km:12}]},
+  {t:'18:00', stay:'75 分', p:'綠食飯桌晚餐', q:'龍潭 餐廳', l:'不主動給一次性餐具、可調整份量、優先用國產食材的餐廳。',
+   g:['今晚的餐廳是環境部認證的綠食飯桌：不主動提供一次性餐具、可調整份量、優先使用國產食材。','點餐時跟店家說份量需求，就是最簡單的惜食。'],
+   look:'找找店裡有沒有綠食飯桌的標示。'}
+ ]},
+ {ch:'水', name:'惜水', k:'第三天・三坑・石門', lead:'沿著客庄的生活用水往上游走，最後在石門水庫找到答案：水從哪裡來。', stops:[
+  {t:'08:40', stay:'45 分', p:'三坑老街・黑白洗', q:'三坑老街', l:'水圳流過老街，大家在同一池水邊洗衣、洗菜。共用，就是最早的永續。',
+   g:['三坑是大漢溪畔的客家聚落。老街旁的「黑白洗」是引水圳的水而成的公共洗衣池，居民在這裡洗衣、洗菜，也在這裡聊天。','一池水大家共用、輪流使用，是客庄最日常的惜水方式。'],
+   look:'看看水從哪裡流進洗衣池，又流去了哪裡。', a:[{k:'move',id:'3a',lb:'接駁到三坑',m:'van',km:6}]},
+  {t:'09:50', stay:'90 分', p:'三坑鐵馬道', q:'三坑自然生態公園', l:'騎單車沿著大漢溪，經過生態公園，到大平紅橋再折返。',
+   g:['三坑鐵馬道沿著大漢溪河岸，途經三坑自然生態公園，可以一路騎到大平紅橋。','一路上的水田、水圳與溪流，就是早上那池水的來處。'],
+   look:'在大平紅橋上停一下，看看溪水往哪個方向流。', rain:'雨天取消單車，改在老街多停留後提早前往石門水庫。',
+   a:[{k:'move',id:'3b',lb:'騎完鐵馬道',m:'bike',km:7},{k:'spend',type:'單車租借'}]},
+  {t:'11:30', stay:'70 分', p:'粄食故事餐', q:'三坑老街', l:'水圳灌溉稻米，稻米磨成粄。這一口，連著上午那條水。',
+   g:['粄是客家米食的總稱。水圳灌溉稻米，稻米磨成米漿，再做成各式各樣的粄。','這一口，連著上午看到的那條水。'],
+   look:'問問老闆：今天的粄是用什麼米做的？', a:[{k:'word',id:'w6',zh:'慢慢行',mean:'慢走',when:'離開時老闆會這樣送你'},{k:'spend',type:'粄食・小吃'}]},
+  {t:'13:00', stay:'140 分', p:'石門水庫', q:'石門水庫', mode:'transit', l:'環境教育場所。客庄的水、桃園台地的水，從這裡出發。',
+   g:['石門水庫位於大漢溪中游，提供灌溉、民生用水、發電與防洪，是桃園最重要的水源之一。','水庫也是環境教育場所。沿著步道走，看集水區保育如何讓水保持乾淨。三天前在龍潭看到的埤塘，水的源頭就在這裡。'],
+   look:'找一個能同時看見湖面和大壩的位置，停下來想想：客庄的水從哪裡來？', rain:'雨天改至室內展區參觀，縮短戶外步道。',
+   a:[{k:'move',id:'3c',lb:'搭台灣好行到石門',m:'bus',km:8},{k:'move',id:'3d',lb:'走水庫步道',m:'walk',km:3}]},
+  {t:'16:00', stay:'30 分', p:'溯水到源頭', q:'石門水庫', l:'旅程走完了。在這裡領你的收據，寫下回家要做的一件事。',
+   g:['三天從惜字、惜食走到惜水，你已經溯到了水的源頭。','打開你的客庄收據，寫下一件回家後也會繼續做的事。'],
+   look:'跟同行的人交換看看，彼此寫了什麼。', a:[{k:'word',id:'w7',zh:'正來尞',mean:'再來玩',when:'跟客庄說再見'},{k:'finale'}]},
+  {t:'16:40', stay:'車程 50 分', p:'石門水庫 → 中壢', q:'中壢火車站', mode:'transit', l:'一樣搭公車離開。',
+   g:['搭台灣好行 503 回到中壢，旅程在這裡結束。','到站後記得按下「我走了」，這是惜帳的最後一筆。'],
+   look:'回程車上，看看你的埤塘最後漲到多少。', a:[{k:'move',id:'3e',lb:'搭台灣好行回中壢',m:'bus',km:20}]}
+ ]}
+];
+const CTR = [
+  {k:'cup', b:'用了自己的餐具或水壺', s:'外帶、喝飲料、吃小吃都算'},
+  {k:'bag', b:'婉拒塑膠袋、吸管', s:'說一聲「不用了」就記一次'},
+  {k:'amenity', b:'沒拆旅宿一次性備品', s:'牙刷、梳子、刮鬍刀，一件記一次'}
+];
+const PREP = ['可重複使用的餐具與水壺（現場也可借）','個人盥洗用品（旅宿不主動提供）','輕便雨具與防曬','好走的鞋（三天步行約 9 公里）','悠遊卡或一卡通（搭公車用）','健保卡與個人藥品'];
+const TYPES = ['在地餐飲','茶農・茶行','粄食・小吃','伴手禮・雜貨','單車租借','職人手作'];
+const QUICK = [50,100,200,500];
+const MOVES = DAYS.flatMap(d => d.stops.flatMap(s => (s.a||[]).filter(a => a.k==='move')));
+const WORDS = DAYS.flatMap((d,di) => d.stops.flatMap(s => (s.a||[]).filter(a => a.k==='word').map(w => ({...w, day:di, place:s.p}))));
+
+const KEY = 'xizhang-v3';
+const fresh = () => ({name:'', leader:'', started:false, view:'trip', day:0, rain:false, moves:{}, words:{}, prep:{}, cnt:{cup:0,bag:0,amenity:0}, spend:[], vow:'', coef:{car:'0.115',bus:'0.0575',van:'0.115'}, no:String(Date.now()).slice(-6)});
+let S = fresh();
+try { const r = localStorage.getItem(KEY); if (r) S = Object.assign(fresh(), JSON.parse(r)); } catch(e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} };
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const buzz = ms => { try { navigator.vibrate && navigator.vibrate(ms); } catch(e) {} };
+const fmt = n => (Math.round(n*10)/10).toLocaleString();
+const nav = (q, mode) => `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(q)}&travelmode=${mode||'walking'}`;
+
+function T(){
+  const km = {bus:0,van:0,walk:0,bike:0};
+  MOVES.forEach(m => { if (S.moves[m.id]) km[m.m] += m.km; });
+  const words = WORDS.filter(w => S.words[w.id]).length;
+  const spend = S.spend.reduce((a,s) => a + s.amt, 0);
+  const items = S.cnt.cup + S.cnt.bag + S.cnt.amenity;
+  const moves = MOVES.filter(m => S.moves[m.id]).length;
+  const level = Math.min(1, (moves + words + Math.min(S.spend.length,5) + Math.min(items,6)/2) / (MOVES.length + WORDS.length + 5 + 3));
+  const c = ['car','bus','van'].map(k => parseFloat(S.coef[k]));
+  let saved = null;
+  if (c.every(v => !isNaN(v))) saved = (km.bus+km.van)*c[0] - (km.bus*c[1] + km.van*c[2]);
+  return {km, words, spend, items, level, saved, green: km.bus+km.walk+km.bike};
+}
+const tasks = s => (s.a||[]).filter(a => a.k==='move'||a.k==='word');
+const stopDone = s => tasks(s).length > 0 && tasks(s).every(a => a.k==='move' ? S.moves[a.id] : S.words[a.id]);
+
+function renderTrip(){
+  $('#days').innerHTML = DAYS.map((d,i) => {
+    const full = d.stops.filter(s => tasks(s).length).every(stopDone);
+    return `<button class="day${full?' complete':''}" role="tab" aria-selected="${i===S.day}" data-day="${i}"><span class="dot" aria-hidden="true"></span><span class="ch">${d.ch}</span><span class="lb">第${'一二三'[i]}天 ${d.name}</span></button>`;
+  }).join('');
+  const d = DAYS[S.day];
+  const nextIdx = d.stops.findIndex(s => tasks(s).length && !stopDone(s));
+  $('#trip').innerHTML = `<div class="dayhead"><div class="k">${d.k}</div><h1>${d.name}</h1><p>${d.lead}</p></div>
+  <ol class="route">${d.stops.map((s,i) => {
+    const done = stopDone(s), tk = tasks(s), fin = tk.filter(a => a.k==='move' ? S.moves[a.id] : S.words[a.id]).length;
+    return `<li class="stop${done?' done':''}${i===nextIdx?' next':''}"><div class="rail" aria-hidden="true"><span class="flow"></span><span class="node"></span></div>
+    <div class="body"><button class="card" data-stop="${S.day}-${i}">
+      <span class="r1"><span>${s.t}</span><span>・${s.stay}</span>${i===nextIdx?'<span class="tag">下一站</span>':''}</span>
+      <h3>${s.p}</h3><p class="line">${s.l}</p>
+      ${s.rain ? `<p class="rainnote">雨天：${s.rain}</p>` : ''}
+      <span class="more"><span class="chips">${tk.length ? `<span class="mini${done?' ok':''}">${fin}/${tk.length} 完成</span>` : ''}${(s.a||[]).some(a=>a.k==='spend')?'<span class="mini">可記消費</span>':''}</span><span>看導覽</span></span>
+    </button></div></li>`; }).join('')}</ol>`;
+}
+function actHTML(a, sid){
+  if (a.k==='move') return `<button class="move" data-mv="${a.id}" aria-pressed="${!!S.moves[a.id]}"><span class="ic" aria-hidden="true">${IC[a.m]}</span>
+    <span class="tx"><b>${a.lb}</b><span>${MODE[a.m]}・約 ${a.km} 公里</span></span><span class="st">${S.moves[a.id] ? '走過了' : '我走了'}</span></button>`;
+  if (a.k==='word') { const on = !!S.words[a.id], pid = 'ph-' + a.id + '-' + (sid ? 'g' : 'l');
+    return `<div class="phrase${on?' said':''}" id="${pid}"><div class="zh" lang="hak">${a.zh}</div><div class="mean">${a.mean}</div><div class="when">${a.when}${a.place && !sid ? '・' + a.place : ''}</div>
+      <button class="say" data-wd="${a.id}" data-ph="${pid}" aria-pressed="${on}">${on ? '說過了，再按一次可取消' : '我說出口了'}</button><div class="seal" aria-hidden="true">說<br>出口</div></div>`; }
+  if (a.k==='spend') { const sum = S.spend.filter(x => x.stop===sid).reduce((t,x) => t + x.amt, 0);
+    return `<button class="spend" data-sp="${sid}" data-type="${a.type}"><span><b>在這裡花了錢？記一筆</b><br><span>${a.type}</span></span><span class="sum">${sum ? 'NT$ ' + sum.toLocaleString() : '＋'}</span></button>`; }
+  if (a.k==='finale') return `<button class="primary finale" data-finale>印出我的客庄收據</button>`;
+  return '';
+}
+let guideId = null;
+function renderGuide(){
+  if (!guideId) return;
+  const [di,si] = guideId.split('-').map(Number), s = DAYS[di].stops[si];
+  $('#guideBody').innerHTML = `<div class="r1">第${'一二三'[di]}天・${s.t}・${s.stay}</div><h2>${s.p}</h2>
+    ${s.g.map(x => `<p class="g">${x}</p>`).join('')}
+    <div class="look"><b>現場找找看</b>${s.look}</div>
+    ${s.rain ? `<div class="rainbox"><b style="display:block;font-size:13px;color:var(--water)">雨天安排</b>${s.rain}</div>` : ''}
+    ${s.a ? `<div class="sect">在這一站</div><div class="acts">${s.a.map(a => actHTML(a, guideId)).join('')}</div>` : ''}
+    <div class="sect">前往這裡</div>
+    <div class="btnrow"><a class="ghost" target="_blank" rel="noopener" href="${nav(s.q, s.mode)}">${IC.pin}開啟導航</a>
+    <button class="ghost" data-nextstop>${si < DAYS[di].stops.length-1 ? '下一站' : (di < 2 ? '明天的行程' : '回到行程')}</button></div>`;
+}
+function renderLedger(){
+  const t = T(), pct = Math.round(t.level*100);
+  $('#wl').style.transform = `translateY(${t.level === 0 ? 150 : 124 - t.level*112}px)`;
+  $('#pct').innerHTML = pct + '<small>%</small>';
+  $('#cap').innerHTML = pct === 0 ? '你的埤塘<br>還沒有水' : pct < 40 ? '水開始<br>流進來了' : pct < 80 ? '埤塘<br>漸漸滿了' : pct < 100 ? '快滿了<br>再一點點' : '埤塘<br>滿了';
+  $('#stats').innerHTML = `<div class="stat"><div class="n">${fmt(t.green)}<small>km</small></div><div class="l">低碳移動</div></div>
+    <div class="stat"><div class="n">${t.saved === null ? '—' : t.saved.toFixed(2)}<small>kg</small></div><div class="l">比開車少排</div></div>
+    <div class="stat"><div class="n">${t.words}<small>/${WORDS.length}</small></div><div class="l">說出口的客語</div></div>`;
+  $('#ctrs').innerHTML = CTR.map(c => `<div class="ctr"><div><b>${c.b}</b><span>${c.s}</span></div>
+    <div class="step"><button data-dec="${c.k}" aria-label="${c.b}減一">−</button><output>${S.cnt[c.k]}</output><button class="plus" data-inc="${c.k}" aria-label="${c.b}加一">＋</button></div></div>`).join('');
+  $('#ledger').innerHTML = S.spend.length ? S.spend.map((x,i) => `<li><span>${esc(x.type)}${x.name ? ' <em>' + esc(x.name) + '</em>' : ''}</span><span>NT$ ${x.amt.toLocaleString()}<button class="x" data-rm="${i}">刪除</button></span></li>`).join('')
+    + `<li><b>合計</b><b>NT$ ${t.spend.toLocaleString()}</b></li>` : '<li class="muted" style="border:0">還沒有紀錄。買一杯茶、一份粄，就記下來。</li>';
+}
+function renderWords(){
+  $('#wordlist').innerHTML = [0,1,2].map(di => `<div class="sect" style="margin-top:${di?14:0}px">第${'一二三'[di]}天・${DAYS[di].name}</div>` +
+    WORDS.filter(w => w.day===di).map(w => actHTML(w)).join('')).join('');
+}
+function renderHelp(){
+  $('#rainTg').setAttribute('aria-checked', String(S.rain));
+  $('#prep').innerHTML = PREP.map((p,i) => `<label class="check"><input type="checkbox" data-prep="${i}" ${S.prep[i]?'checked':''}><span>${p}</span></label>`).join('');
+  const lc = $('#leaderCall');
+  if (S.leader) { lc.href = 'tel:' + S.leader.replace(/[^\d+]/g,''); lc.removeAttribute('aria-disabled'); $('#leaderTxt').textContent = S.leader; }
+  else { lc.href = '#'; lc.setAttribute('aria-disabled','true'); $('#leaderTxt').textContent = '在下方填入領隊電話'; }
+  if (document.activeElement !== $('#setName')) $('#setName').value = S.name;
+  if (document.activeElement !== $('#setLeader')) $('#setLeader').value = S.leader;
+  $('#cCar').value = S.coef.car; $('#cBus').value = S.coef.bus; $('#cVan').value = S.coef.van;
+}
+let lastLevel = null;
+function pondPulse(){
+  const lv = T().level;
+  if (lastLevel !== null && lv > lastLevel) { const pd = $('#pond'); pd.classList.remove('pulse'); void pd.offsetWidth; pd.classList.add('pulse'); }
+  lastLevel = lv;
+}
+function renderAll(){
+  document.body.classList.toggle('rain', S.rain);
+  $('#who').textContent = S.name ? S.name + ' 的旅程' : '溯水惜庄';
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('on', v.id === 'v-' + S.view));
+  document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.v === S.view)));
+  renderTrip(); renderLedger(); renderWords(); renderHelp(); renderGuide(); pondPulse(); save();
+}
+
+let toastT;
+function toast(msg){ const el = $('#toast'); el.textContent = msg; el.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('on'), 1800); }
+
+let openSheet = null, spendCtx = null;
+function sheet(id){ if (openSheet && openSheet !== $(id)) openSheet.classList.remove('on'); openSheet = $(id); $('#scrim').classList.add('on'); openSheet.classList.add('on'); }
+function closeSheet(){ if (!openSheet) return; openSheet.classList.remove('on'); $('#scrim').classList.remove('on'); if (openSheet.id === 'guide') guideId = null; openSheet = null; }
+$('#scrim').addEventListener('click', closeSheet);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { if ($('#rc').classList.contains('on')) closeRc(); else closeSheet(); } });
+
+function openGuide(id){ guideId = id; renderGuide(); sheet('#guide'); $('#guide').scrollTop = 0; }
+function renderSpendSheet(){
+  let where = '';
+  if (spendCtx.stop) { const [a,b] = spendCtx.stop.split('-').map(Number); where = '在「' + DAYS[a].stops[b].p + '」'; }
+  $('#spWhere').textContent = where || '在客庄小店、茶農、職人那裡花的錢';
+  $('#spType').innerHTML = TYPES.map(t => `<button class="chip" data-ty="${t}" aria-pressed="${spendCtx.type===t}">${t}</button>`).join('');
+  $('#spQuick').innerHTML = QUICK.map(q => `<button class="chip" data-q="${q}" aria-pressed="${+$('#spAmt').value===q}">${q} 元</button>`).join('');
+  $('#spSave').disabled = !(+$('#spAmt').value > 0);
+}
+function openSpend(stop, type){ spendCtx = {stop, type: type || TYPES[0], back: !!guideId}; $('#spAmt').value=''; $('#spName').value=''; renderSpendSheet(); sheet('#spendSheet'); }
+$('#spendSheet').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.ty) { spendCtx.type = b.dataset.ty; renderSpendSheet(); }
+  if (b.dataset.q) { $('#spAmt').value = b.dataset.q; renderSpendSheet(); }
+});
+$('#spAmt').addEventListener('input', renderSpendSheet);
+$('#spSave').addEventListener('click', () => {
+  const amt = parseInt($('#spAmt').value,10); if (!(amt > 0)) return;
+  S.spend.push({stop:spendCtx.stop, type:spendCtx.type, name:$('#spName').value.trim(), amt});
+  buzz(15); toast('記下了，NT$ ' + amt.toLocaleString() + ' 留在客庄');
+  const back = spendCtx.back && spendCtx.stop; closeSheet(); renderAll(); if (back) openGuide(spendCtx.stop);
+});
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('button,a'); if (!b) return;
+  if (b.hasAttribute('data-close')) { closeSheet(); return; }
+  if (b.classList.contains('day')) { S.day = +b.dataset.day; renderAll(); return; }
+  if (b.dataset.stop) { openGuide(b.dataset.stop); return; }
+  if (b.dataset.v) { S.view = b.dataset.v; closeSheet(); renderAll(); window.scrollTo({top:0}); return; }
+  if (b.dataset.mv) { const on = !S.moves[b.dataset.mv]; S.moves[b.dataset.mv] = on; renderAll(); if (on) { buzz(12); toast('這段路流進埤塘了'); } return; }
+  if (b.dataset.wd) { const id = b.dataset.wd, on = !S.words[id]; S.words[id] = on; renderAll();
+    if (on) { const el = document.getElementById(b.dataset.ph); if (el) el.classList.add('stamp'); buzz([10,40,20]); toast('說出口了'); } return; }
+  if (b.dataset.sp) { openSpend(b.dataset.sp, b.dataset.type); return; }
+  if (b.hasAttribute('data-finale')) { closeSheet(); openRc(); return; }
+  if (b.hasAttribute('data-nextstop')) { const [di,si] = guideId.split('-').map(Number);
+    if (si < DAYS[di].stops.length-1) openGuide(di + '-' + (si+1)); else { closeSheet(); if (di < 2) S.day = di+1; renderAll(); window.scrollTo({top:0, behavior:'smooth'}); } return; }
+  if (b.dataset.inc) { S.cnt[b.dataset.inc]++; buzz(10); renderAll(); return; }
+  if (b.dataset.dec) { S.cnt[b.dataset.dec] = Math.max(0, S.cnt[b.dataset.dec]-1); renderAll(); return; }
+  if (b.dataset.rm !== undefined) { S.spend.splice(+b.dataset.rm,1); renderAll(); return; }
+  if (b.id === 'leaderCall' && !S.leader) { e.preventDefault(); $('#setLeader').focus(); }
+});
+$('#addSpend').addEventListener('click', () => openSpend(null));
+$('#rainTg').addEventListener('click', () => { S.rain = !S.rain; renderAll(); toast(S.rain ? '已切換雨天安排' : '已回到晴天安排'); });
+document.addEventListener('change', e => { if (e.target.dataset.prep !== undefined) { S.prep[e.target.dataset.prep] = e.target.checked; save(); } });
+$('#setName').addEventListener('input', e => { S.name = e.target.value.trim(); save(); $('#who').textContent = S.name ? S.name + ' 的旅程' : '溯水惜庄'; });
+$('#setLeader').addEventListener('change', e => { S.leader = e.target.value.trim(); renderAll(); });
+[['cCar','car'],['cBus','bus'],['cVan','van']].forEach(([id,k]) => $('#'+id).addEventListener('change', e => { S.coef[k] = e.target.value; renderAll(); }));
+$('#reset').addEventListener('click', () => { if (confirm('確定清除這支手機上所有的惜帳紀錄？這個動作無法復原。')) { S = fresh(); save(); location.reload(); } });
+
+function openRc(){
+  const t = T(), d = new Date();
+  const code = `XZ${S.no}-B${t.km.bus}-V${t.km.van}-W${t.km.walk}-K${t.km.bike}-I${t.items}-H${t.words}-S${t.spend}`;
+  $('#slip').innerHTML = `<h2 id="rcT">客庄收據</h2>
+    <div class="meta">溯水惜庄　第 ${S.no} 號　${d.getFullYear()}.${d.getMonth()+1}.${d.getDate()}</div>
+    <div class="mark" aria-hidden="true">惜<br>帳</div>
+    <table>
+      <tr><td>碳</td><td>搭公車、台灣好行</td><td>${fmt(t.km.bus)} km</td></tr>
+      <tr><td>碳</td><td>步行</td><td>${fmt(t.km.walk)} km</td></tr>
+      <tr><td>碳</td><td>騎單車</td><td>${fmt(t.km.bike)} km</td></tr>
+      <tr><td>碳</td><td>少用的一次性用品</td><td>${t.items} 件</td></tr>
+      <tr><td>文</td><td>說出口的客語</td><td>${t.words} / ${WORDS.length} 句</td></tr>
+      <tr><td>庄</td><td>留在客庄小店的錢</td><td>NT$ ${t.spend.toLocaleString()}</td></tr>
+      <tr><td>塘</td><td>你的埤塘水位</td><td>${Math.round(t.level*100)}%</td></tr>
+      <tr class="sum"><td>計</td><td>比開車少排放</td><td>${t.saved === null ? '—' : t.saved.toFixed(2) + ' kg'}</td></tr>
+    </table>
+    <div class="vow"><label for="vw">回家後，我要做的一件事</label><input id="vw" maxlength="30" value="${esc(S.vow)}" placeholder="例如：每天帶自己的杯子"></div>
+    <div class="sign">${S.name ? esc(S.name) + '　敬上' : ''}</div>
+    <div class="code">結算碼　${code}</div>`;
+  $('#vw').addEventListener('input', e => { S.vow = e.target.value; save(); });
+  const rc = $('#rc'); rc.classList.remove('on'); void rc.offsetWidth; rc.classList.add('on'); rc.scrollTop = 0; buzz([20,60,20,60,20]);
+  setTimeout(() => $('#closeRc').focus({preventScroll:true}), 1700);
+}
+function closeRc(){ $('#rc').classList.remove('on'); }
+$('#openRc').addEventListener('click', openRc);
+$('#closeRc').addEventListener('click', closeRc);
+
+function enter(animate){
+  $('#app').hidden = false; $('#tabbar').hidden = false;
+  if (animate) { $('#gate').classList.add('gone'); setTimeout(() => $('#gate').hidden = true, 950); } else $('#gate').hidden = true;
+  renderAll();
+}
+$('#gName').value = S.name;
+$('#gateForm').addEventListener('submit', e => { e.preventDefault(); S.name = $('#gName').value.trim(); S.started = true; save(); enter(true); });
+if (S.started) enter(false);
+</script>
+</body>
+</html>
